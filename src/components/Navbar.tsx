@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { APP_NAME } from '@/app/constants'
 
 export default function Navbar() {
   return (
@@ -6,7 +7,7 @@ export default function Navbar() {
       <div className="container mx-auto px-6">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="text-2xl font-bold text-[#31BCFF]">
-            TimeTracker
+            {APP_NAME}
           </Link>
           <div className="hidden md:flex space-x-8">
             <Link href="#" className="text-gray-600 hover:text-[#31BCFF]">Features</Link>

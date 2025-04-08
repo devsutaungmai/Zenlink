@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useAuth } from '@/app/lib/useAuth'
 import Link from 'next/link'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
+import { APP_NAME } from '@/app/constants'
 
 export default function LoginPage() {
   const { login, error, loading } = useAuth()
@@ -21,7 +22,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-white flex flex-col items-center justify-center px-4">
       {/* Logo */}
       <Link href="/">
-        <h1 className="text-3xl font-bold text-[#31BCFF] mb-8">TimeTracker</h1>
+        <h1 className="text-3xl font-bold text-[#31BCFF] mb-8">{APP_NAME}</h1>
       </Link>
 
       {/* Main Container */}

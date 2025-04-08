@@ -82,7 +82,7 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-center px-4">
       <Link href="/">
-        <h1 className="text-3xl font-bold text-[#31BCFF] mb-8">TimeTracker</h1>
+        <h1 className="text-3xl font-bold text-[#31BCFF] mb-8">ZenLink</h1>
       </Link>
 
       <div className="w-full max-w-md">
@@ -119,7 +119,7 @@ export default function RegisterPage() {
                   type="text"
                   value={userForm.firstName}
                   onChange={(e) => setUserForm({ ...userForm, firstName: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#31BCFF] focus:border-[#31BCFF] outline-none"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#31BCFF] focus:border-[#31BCFF] outline-none text-gray-700"
                   required
                 />
               </div>
@@ -129,7 +129,7 @@ export default function RegisterPage() {
                   type="text"
                   value={userForm.lastName}
                   onChange={(e) => setUserForm({ ...userForm, lastName: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#31BCFF] focus:border-[#31BCFF] outline-none"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#31BCFF] focus:border-[#31BCFF] outline-none text-gray-700"
                   required
                 />
               </div>
@@ -141,7 +141,7 @@ export default function RegisterPage() {
                 type="email"
                 value={userForm.email}
                 onChange={(e) => setUserForm({ ...userForm, email: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#31BCFF] focus:border-[#31BCFF] outline-none"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#31BCFF] focus:border-[#31BCFF] outline-none text-gray-700"
                 required
               />
             </div>
@@ -153,7 +153,7 @@ export default function RegisterPage() {
                   type={showPassword ? "text" : "password"}
                   value={userForm.password}
                   onChange={(e) => setUserForm({ ...userForm, password: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#31BCFF] focus:border-[#31BCFF] outline-none"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#31BCFF] focus:border-[#31BCFF] outline-none text-gray-700"
                   required
                 />
                 <button
@@ -176,7 +176,7 @@ export default function RegisterPage() {
                 type="password"
                 value={userForm.confirmPassword}
                 onChange={(e) => setUserForm({ ...userForm, confirmPassword: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#31BCFF] focus:border-[#31BCFF] outline-none"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-[#31BCFF] focus:border-[#31BCFF] outline-none text-gray-700"
                 required
               />
             </div>
