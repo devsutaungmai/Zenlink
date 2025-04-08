@@ -2,12 +2,13 @@
   "name": "time-tracking-app",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "prisma generate && next build",
-    "start": "next start",
-    "lint": "next lint",
-    "postinstall": "prisma generate"
+ "scripts": {
+  "dev": "next dev",
+  "build": "prisma generate && next build",
+  "start": "next start",
+  "lint": "next lint",
+  "postinstall": "prisma generate",
+  "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.1",
