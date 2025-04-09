@@ -68,7 +68,13 @@ model Employee {
 model Department {
   id          String     @id @default(cuid())
   name        String
+  number      String?
   address     String
+  address2    String?
+  postCode    String?
+  city        String
+  phone       String
+  country     String
   employees   Employee[]
   projects    Project[]
   createdAt   DateTime   @default(now())

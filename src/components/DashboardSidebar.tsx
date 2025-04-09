@@ -1,23 +1,28 @@
 import Link from 'next/link'
 import { Fragment } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
+import { Dialog, Transition, Disclosure } from '@headlessui/react'
+import { XMarkIcon, ChevronDownIcon, Cog6ToothIcon } from '@heroicons/react/24/outline'
 import {
   HomeIcon,
-  CalendarIcon,
+  BuildingOfficeIcon,
+  UsersIcon,
   UserGroupIcon,
-  ClockIcon,
-  ChartBarIcon,
-  Cog6ToothIcon,
 } from '@heroicons/react/24/outline'
 import { APP_NAME } from '@/app/constants'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
-  { name: 'Schedule', href: '/dashboard/schedule', icon: CalendarIcon },
-  { name: 'Employees', href: '/dashboard/employees', icon: UserGroupIcon },
-  { name: 'Time & Attendance', href: '/dashboard/time', icon: ClockIcon },
-  { name: 'Reports', href: '/dashboard/reports', icon: ChartBarIcon },
+  { name: 'Users', href: '/dashboard/users', icon: UsersIcon },
+  {
+    name: 'Employees',
+    icon: UserGroupIcon,
+    children: [
+      { name: 'Department A', href: '/dashboard/employees/department-a' },
+      { name: 'Department B', href: '/dashboard/employees/department-b' },
+      { name: 'Department C', href: '/dashboard/employees/department-c' },
+      { name: 'Department D', href: '/dashboard/employees/department-d' },
+    ],
+  },
   { name: 'Settings', href: '/dashboard/settings', icon: Cog6ToothIcon },
 ]
 
@@ -30,15 +35,45 @@ export default function DashboardSidebar({ mobileMenuOpen, setMobileMenuOpen }: 
   const SidebarContent = () => (
     <nav className="mt-5 flex-1 px-2 space-y-1">
       {navigation.map((item) => (
-        <Link
-          key={item.name}
-          href={item.href}
-          className="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-[#31BCFF]"
-          onClick={() => setMobileMenuOpen(false)}
-        >
-          <item.icon className="mr-3 h-6 w-6 text-gray-400 group-hover:text-[#31BCFF]" />
-          {item.name}
-        </Link>
+        !item.children ? (
+          <Link
+            key={item.name}
+            href={item.href}
+            className="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-[#31BCFF]"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <item.icon className="mr-3 h-6 w-6 text-gray-400 group-hover:text-[#31BCFF]" />
+            {item.name}
+          </Link>
+        ) : (
+          <Disclosure key={item.name} as="div" className="space-y-1">
+            {({ open }) => (
+              <>
+                <Disclosure.Button className="group flex w-full items-center px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-[#31BCFF]">
+                  <item.icon className="mr-3 h-6 w-6 text-gray-400 group-hover:text-[#31BCFF]" />
+                  <span className="flex-1">{item.name}</span>
+                  <ChevronDownIcon
+                    className={`${
+                      open ? 'rotate-180 transform' : ''
+                    } h-5 w-5 text-gray-400 transition-transform duration-200`}
+                  />
+                </Disclosure.Button>
+                <Disclosure.Panel className="space-y-1">
+                  {item.children.map((subItem) => (
+                    <Link
+                      key={subItem.name}
+                      href={subItem.href}
+                      className="group flex items-center pl-11 pr-2 py-2 text-sm font-medium text-gray-600 rounded-md hover:text-[#31BCFF] hover:bg-gray-50"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {subItem.name}
+                    </Link>
+                  ))}
+                </Disclosure.Panel>
+              </>
+            )}
+          </Disclosure>
+        )
       ))}
     </nav>
   )
