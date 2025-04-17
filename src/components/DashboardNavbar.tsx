@@ -24,8 +24,8 @@ const navigation = [
     icon: UserGroupIcon,
     children: [
       { name: 'Departments', href: '/dashboard/departments' },
-      { name: 'Empoloyees', href: '/dashboard/departments' },
-      { name: 'Empoloyees Groups', href: '/dashboard/departments' },
+      { name: 'Empoloyees', href: '/dashboard/employees' },
+      { name: 'Empoloyees Groups', href: '/dashboard/employee-groups' },
       { name: 'Contracts', href: '/dashboard/departments' },
       { name: 'Documents', href: '/dashboard/departments' },
     ],

@@ -1,5 +1,4 @@
 import { prisma } from '@/app/lib/prisma'
-import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { NextResponse } from 'next/server'
 
@@ -32,6 +31,7 @@ export async function POST(req: Request) {
       role: user.role
     }
   })
+
   res.cookies.set('token', token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
