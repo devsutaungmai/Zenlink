@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -12,7 +6,6 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
 
 model User {
   id         String    @id @default(cuid())
@@ -24,26 +17,26 @@ model User {
   role       String    @default("USER")
   businessId String
   business   Business  @relation(fields: [businessId], references: [id])
-  employee   Employee?
+  employees  Employee[] // Changed from `employee Employee?` to support one-to-many
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
 }
 
 model Business {
-  id            String   @id @default(cuid())
-  name          String
-  address       String
-  type          String
+  id             String   @id @default(cuid())
+  name           String
+  address        String
+  type           String
   employeesCount Int
-  users        User[]
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  users          User[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model Employee {
   id              String     @id @default(cuid())
   user            User       @relation(fields: [userId], references: [id])
-  userId          String     @unique
+  userId          String     // Removed `@unique` to allow multiple employees per user
   firstName       String
   lastName        String
   birthday        DateTime
@@ -58,11 +51,23 @@ model Employee {
   isTeamLeader    Boolean    @default(false)
   department      Department @relation(fields: [departmentId], references: [id])
   departmentId    String
+  groupMemberships EmployeeGroup[] @relation(name: "GroupMembers")
   timeEntries     TimeEntry[]
   sickLeaves      SickLeave[]
   workPlans       WorkPlan[]
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
+}
+
+model EmployeeGroup {
+  id           String    @id @default(cuid())
+  name         String
+  description  String?
+  members      Employee[] @relation(name: "GroupMembers")
+  departmentId String?
+  department   Department? @relation(fields: [departmentId], references: [id])
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
 
 model Department {
@@ -76,6 +81,7 @@ model Department {
   phone       String
   country     String
   employees   Employee[]
+  groups      EmployeeGroup[] @relation
   projects    Project[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
@@ -92,18 +98,18 @@ model Project {
 }
 
 model TimeEntry {
-  id          String   @id @default(cuid())
-  employee    Employee @relation(fields: [employeeId], references: [id])
-  employeeId  String
-  project     Project  @relation(fields: [projectId], references: [id])
-  projectId   String
-  checkIn     DateTime
-  checkOut    DateTime?
-  gpsLatitude Float?
+  id           String   @id @default(cuid())
+  employee     Employee @relation(fields: [employeeId], references: [id])
+  employeeId   String
+  project      Project  @relation(fields: [projectId], references: [id])
+  projectId    String
+  checkIn      DateTime
+  checkOut     DateTime?
+  gpsLatitude  Float?
   gpsLongitude Float?
-  approved    Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  approved     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model SickLeave {

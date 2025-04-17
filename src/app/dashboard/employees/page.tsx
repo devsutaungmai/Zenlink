@@ -4,53 +4,54 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline'
 
-interface Department {
+interface Employee {
   id: string
-  name: string
-  number?: string
-  address: string
-  address2?: string
-  postCode?: string
-  city: string
-  phone: string
-  country: string
-  _count: {
-    employees: number
+  firstName: string
+  lastName: string
+  employeeNo: string
+  user: {
+    email: string
+  }
+  department: {
+    name: string
+  }
+  _count?: {
+    timeEntries: number
   }
 }
 
-export default function DepartmentsPage() {
-  const [departments, setDepartments] = useState<Department[]>([])
+export default function EmployeesPage() {
+  const [employees, setEmployees] = useState<Employee[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchDepartments()
+    fetchEmployees()
   }, [])
 
-  const fetchDepartments = async () => {
+  const fetchEmployees = async () => {
     try {
-      const res = await fetch('/api/departments')
+      const res = await fetch('/api/employees')
       const data = await res.json()
-      setDepartments(data)
+      setEmployees(data)
     } catch (error) {
-      console.error('Error fetching departments:', error)
+      console.error('Error fetching employees:', error)
     } finally {
       setLoading(false)
     }
   }
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this department?')) return
+    if (!confirm('Are you sure you want to delete this employee?')) return
 
     try {
-      const res = await fetch(`/api/departments/${id}`, {
+      const res = await fetch(`/api/employees/${id}`, {
         method: 'DELETE',
       })
       if (res.ok) {
-        setDepartments(departments.filter(dept => dept.id !== id))
+        setEmployees(employees.filter(emp => emp.id !== id))
       }
     } catch (error) {
-      console.error('Error deleting department:', error)
+      console.error('Error deleting employee:', error)
     }
   }
 
@@ -62,18 +63,18 @@ export default function DepartmentsPage() {
     <>
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-xl font-semibold text-gray-900">Departments</h1>
+          <h1 className="text-xl font-semibold text-gray-900">Employees</h1>
           <p className="mt-2 text-sm text-gray-700">
-            A list of all departments in your organization.
+            A list of all employees in your organization.
           </p>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <Link
-            href="/dashboard/departments/create"
+            href="/dashboard/employees/create"
             className="inline-flex items-center justify-center rounded-md border border-transparent bg-[#31BCFF] px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-[#31BCFF]/90"
           >
             <PlusIcon className="-ml-1 mr-2 h-5 w-5" />
-            Create Department
+            Create Employee
           </Link>
         </div>
       </div>
@@ -85,43 +86,47 @@ export default function DepartmentsPage() {
               <table className="min-w-full divide-y divide-gray-300">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Name</th>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Department Number</th>
-                    {/* <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">City</th>
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Country</th> */}
-                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Employees</th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">First Name</th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Last Name</th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Employee No</th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Department</th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email</th>
+                    <th className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Time Entries</th>
                     <th className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                       <span className="sr-only">Actions</span>
                     </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  {departments.map((department) => (
-                    <tr key={department.id}>
+                  {employees.map((employee) => (
+                    <tr key={employee.id}>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
-                        {department.name}
+                        {employee.firstName}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {department.number || '-'}
+                        {employee.lastName}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {department.city}
+                        {employee.employeeNo}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {department.country}
+                        {employee.department.name}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {department._count.employees}
+                        {employee.user.email}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {employee._count?.timeEntries || 0}
                       </td>
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                         <Link
-                          href={`/dashboard/departments/${department.id}/edit`}
+                          href={`/dashboard/employees/${employee.id}/edit`}
                           className="text-[#31BCFF] hover:text-[#31BCFF]/90 mr-4"
                         >
                           <PencilIcon className="h-5 w-5" />
                         </Link>
                         <button
-                          onClick={() => handleDelete(department.id)}
+                          onClick={() => handleDelete(employee.id)}
                           className="text-red-600 hover:text-red-900"
                         >
                           <TrashIcon className="h-5 w-5" />

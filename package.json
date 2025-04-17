@@ -2,13 +2,13 @@
   "name": "time-tracking-app",
   "version": "0.1.0",
   "private": true,
- "scripts": {
-  "dev": "next dev",
-  "build": "prisma generate && next build",
-  "start": "next start",
-  "lint": "next lint",
-  "postinstall": "prisma generate",
-  "vercel-build": "prisma generate && prisma migrate deploy && next build"
+  "scripts": {
+    "dev": "next dev",
+    "build": "prisma generate && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "postinstall": "prisma generate",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.1",
@@ -16,17 +16,21 @@
     "@prisma/client": "^6.5.0",
     "bcryptjs": "^3.0.2",
     "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
     "next": "15.2.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-select": "^5.10.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.9",
+    "@types/lodash": "^4.17.16",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/react-select": "^5.0.0",
     "prisma": "^6.5.0",
     "tailwindcss": "^4",
     "typescript": "^5"
